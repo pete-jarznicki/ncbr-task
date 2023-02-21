@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import checkIfValidUser from '../../helpers/checkIfValidUser'
+import { useNavigate } from 'react-router-dom'
+import checkIfValidUser from '../../../helpers/checkIfValidUser'
+import setLocalStorageItem from '../../../helpers/setLocalStorageItem'
 
 const LoginForm = () => {
   const [error, setError] = useState(false)
+  const navigate = useNavigate()
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -13,7 +16,12 @@ const LoginForm = () => {
     const email = target.email.value
     const password = target.password.value
     const isValidUser = checkIfValidUser(email, password)
-    setError(!isValidUser)
+
+    if (isValidUser) {
+      setLocalStorageItem('auth', { email, password })
+      return navigate('/account')
+    }
+    setError(true)
   }
 
   return (
