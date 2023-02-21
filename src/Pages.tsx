@@ -1,15 +1,18 @@
+// @ts-nocheck
+
 import { Route, Routes } from 'react-router-dom'
 import Account from './components/Account/Account'
 import AccountForm from './components/Forms/AccountForm'
 import Login from './components/Login'
 import ProtectedRoutes from './components/ProtectedRoutes'
+import { useAuth } from './providers/AuthProvider/AuthProvider'
 
 const Pages = () => {
   return (
     <Routes>
-      <Route path='/' element={<Login />} />
+      <Route path='/login' element={<Login />} />
       <Route element={<ProtectedRoutes />}>
-        <Route path='/account' element={<Account />} />
+        <Route path='/' element={<Account />} />
         <Route path='/account-form' element={<AccountForm />} />
       </Route>
     </Routes>

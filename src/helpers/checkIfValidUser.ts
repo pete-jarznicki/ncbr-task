@@ -1,8 +1,8 @@
+import { asyncLocalStorage } from './../services/asyncLocalStorage'
 import { IUser } from '../types'
-import getLocalStorageData from './getLocalStorageData'
 
-const checkIfValidUser = (email: string, password: string): boolean => {
-  const usersData = getLocalStorageData('userRecords')
+const checkIfValidUser = async (email: string, password: string) => {
+  const usersData = await asyncLocalStorage.getItem('userRecords')
   const user = usersData.find((user: IUser) => user.email === email && user.password === password)
   return Boolean(user)
 }

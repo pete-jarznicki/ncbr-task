@@ -2,21 +2,31 @@
 
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import getLocalStorageData from '../../../helpers/getLocalStorageData'
-import setLocalStorageItem from '../../../helpers/setLocalStorageItem'
 import { useAuth } from '../../../providers/AuthProvider/AuthProvider'
+import { asyncLocalStorage } from '../../../services/asyncLocalStorage'
 
 const AccountForm = () => {
   const { userData } = useAuth()
   const [allUsersData, setAllUsersData] = useState({} as any)
+  const [isLoading, setIsLoading] = useState(true)
+
   const navigate = useNavigate()
 
   useEffect(() => {
-    const allUsersData = getLocalStorageData('userRecords')
-    setAllUsersData(allUsersData)
+    const handleAsync = async () => {
+      try {
+        const allUsersData = await asyncLocalStorage.getItem('userRecords')
+        setAllUsersData(allUsersData)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    handleAsync()
+    setIsLoading(false)
   }, [])
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const target = event.target as typeof event.target & {
       firstName: { value: string }
@@ -36,7 +46,7 @@ const AccountForm = () => {
     const experience = target.experience.value
 
     const newState = allUsersData.filter((user) => user.email !== userData.email)
-    setLocalStorageItem('userRecords', [
+    await asyncLocalStorage('userRecords', [
       ...newState,
       {
         ...userData,
@@ -51,10 +61,12 @@ const AccountForm = () => {
         },
       },
     ])
-    return navigate('/account')
+    return navigate('/')
   }
 
-  return (
+  return isLoading ? (
+    <h1>Wczytywanie...</h1>
+  ) : (
     <form
       style={{ display: 'flex', flexDirection: 'column', maxWidth: '600px' }}
       onSubmit={handleOnSubmit}

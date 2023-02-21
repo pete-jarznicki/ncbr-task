@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import checkIfValidUser from '../../../helpers/checkIfValidUser'
-import setLocalStorageItem from '../../../helpers/setLocalStorageItem'
+import { asyncLocalStorage } from '../../../services/asyncLocalStorage'
 
 const LoginForm = () => {
   const [error, setError] = useState(false)
   const navigate = useNavigate()
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const target = event.target as typeof event.target & {
       email: { value: string }
@@ -15,11 +15,11 @@ const LoginForm = () => {
     }
     const email = target.email.value
     const password = target.password.value
-    const isValidUser = checkIfValidUser(email, password)
+    const isValidUser = await checkIfValidUser(email, password)
 
     if (isValidUser) {
-      setLocalStorageItem('auth', { email, password })
-      return navigate('/account')
+      await asyncLocalStorage.setItem('auth', { email })
+      return navigate('/')
     }
     setError(true)
   }

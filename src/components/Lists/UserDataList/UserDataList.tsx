@@ -1,3 +1,6 @@
+// @ts-nocheck
+import { useAuth } from '../../../providers/AuthProvider/AuthProvider'
+
 const labels = [
   'Imię',
   'Nazwisko',
@@ -8,10 +11,8 @@ const labels = [
   'Lata doświadczenia',
 ]
 
-const UserDataList = ({ userData }: { userData: any }) => {
-  if (!userData.info) {
-    return <h2>Brak danych o użytkowniku</h2>
-  }
+const UserDataList = () => {
+  const { userData } = useAuth()
 
   return (
     <ul>
