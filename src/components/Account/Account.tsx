@@ -1,7 +1,9 @@
 // @ts-nocheck
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { asyncLocalStorage } from '../../services/asyncLocalStorage'
+import Button from '../Button'
 import UserDataList from '../Lists/UserDataList'
+import styles from './Account.module.scss'
 
 const Account = () => {
   const navigate = useNavigate()
@@ -11,11 +13,15 @@ const Account = () => {
     return navigate('/login')
   }
   return (
-    <div>
-      <button onClick={handleSignOut}>Wyloguj się</button>
-      <h1>Dane użytkownika</h1>
-      <UserDataList />
-      <Link to='/account-form'>Przejdź do formularza danych</Link>
+    <div className={styles.container}>
+      <div className={styles.info_box}>
+        <h1 className={styles.heading}>Dane użytkownika</h1>
+        <UserDataList />
+        <div className={styles.button_container}>
+          <Button href='/account-form'>Uzupełnij dane</Button>
+          <Button onClick={handleSignOut}>Wyloguj się</Button>
+        </div>
+      </div>
     </div>
   )
 }

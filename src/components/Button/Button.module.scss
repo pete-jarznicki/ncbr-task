@@ -1,0 +1,17 @@
+@import '../../styles/mixins.scss';
+
+.button {
+  @include flexCenter;
+  width: 20rem;
+  padding: 1.1rem;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #ffffff;
+  background: #000000;
+  border: none;
+  border-radius: 3rem;
+}
+
+.button:hover {
+  cursor: pointer;
+}

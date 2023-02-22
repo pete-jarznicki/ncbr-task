@@ -1,8 +1,11 @@
+// @ts-nocheck
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import checkIfValidUser from '../../../helpers/checkIfValidUser'
 import { asyncLocalStorage } from '../../../services/asyncLocalStorage'
-
+import Button from '../../Button'
+import FormInput from '../FormInput/FormInput'
+import styles from './LoginForm.module.scss'
 const LoginForm = () => {
   const [error, setError] = useState(false)
   const navigate = useNavigate()
@@ -25,10 +28,10 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={handleOnSubmit}>
-      <input id='email' name='email' placeholder='Wprowadź adres email' type='email' />
-      <input id='password' name='password' placeholder='Wprowadź hasło' type='password' />
-      <button type='submit'>Zaloguj się</button>
+    <form className={styles.container} onSubmit={handleOnSubmit}>
+      <FormInput id='email' name='email' placeholder='Wprowadź adres email' type='email' />
+      <FormInput id='password' name='password' placeholder='Wprowadź hasło' type='password' />
+      <Button type='submit'>Zaloguj się</Button>
       {error ? 'Nieprawidłowe dane, spróbuj jeszcze raz' : ''}
     </form>
   )

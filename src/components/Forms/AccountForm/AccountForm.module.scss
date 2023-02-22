@@ -1,0 +1,20 @@
+@import '../../../styles/mixins.scss';
+
+.form {
+  @include flexCenter;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.container {
+  @include flexCenter;
+  width: 100vw;
+  height: 100vh;
+}
+
+.info_box {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 3rem 5rem;
+  width: 35%;
+  height: 50%;
+}
