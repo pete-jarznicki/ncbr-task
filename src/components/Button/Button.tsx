@@ -1,8 +1,15 @@
-// @ts-nocheck
+import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Button.module.scss'
 
-const Button = ({ onClick, children, type, href }: any) => {
+interface IButtonProps {
+  onClick?: () => void
+  children: ReactNode
+  type?: 'submit' | 'reset' | 'button'
+  href?: string
+}
+
+const Button = ({ onClick, children, type, href }: IButtonProps) => {
   return href ? (
     <Link className={styles.button} to={href}>
       {children}

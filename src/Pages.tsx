@@ -1,11 +1,8 @@
-// @ts-nocheck
-
 import { Route, Routes } from 'react-router-dom'
 import Account from './components/Account/Account'
 import AccountForm from './components/Forms/AccountForm'
 import Login from './components/Login'
 import ProtectedRoutes from './components/ProtectedRoutes'
-import { useAuth } from './providers/AuthProvider/AuthProvider'
 
 const Pages = () => {
   return (

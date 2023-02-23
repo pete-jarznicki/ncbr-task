@@ -4,38 +4,11 @@ import { asyncLocalStorage } from './services/asyncLocalStorage'
 
 const initialLocalStorageState = [
   {
-    email: 'example@gmail.com',
-    password: '123456',
+    email: 'testuser@gmail.com',
+    password: 'testuser123',
     info: {
       firstName: '',
       lastName: '',
-      sex: '',
-      dateOfBirth: '',
-      address: '',
-      phoneNumber: '',
-      experience: '',
-    },
-  },
-  {
-    email: 'piotr.jarznicki@britenet.com.pl',
-    password: '111111',
-    info: {
-      firstName: '',
-      lastName: '',
-      sex: '',
-      dateOfBirth: '',
-      address: '',
-      phoneNumber: '',
-      experience: '',
-    },
-  },
-  {
-    email: 'admin@gmail.com',
-    password: 'admin123',
-    info: {
-      firstName: '',
-      lastName: '',
-      sex: '',
       dateOfBirth: '',
       address: '',
       phoneNumber: '',
@@ -45,24 +18,23 @@ const initialLocalStorageState = [
 ]
 
 const App = () => {
-  // A helper so I don't have to type in manually.
-  // useEffect(() => {
-  //   const handleAsync = async () => {
-  //     try {
-  //       await asyncLocalStorage.setItem('userRecords', initialLocalStorageState)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+  useEffect(() => {
+    const handleAsync = async () => {
+      try {
+        const localStorageUsersState = await asyncLocalStorage.getItem('userRecords')
+        if (localStorageUsersState !== null) {
+          await asyncLocalStorage.setItem('userRecords', localStorageUsersState)
+        }
+        await asyncLocalStorage.setItem('userRecords', initialLocalStorageState)
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
-  //   handleAsync()
-  // }, [])
+    handleAsync()
+  }, [])
 
-  return (
-    <div className='App'>
-      <Pages />
-    </div>
-  )
+  return <Pages />
 }
 
 export default App

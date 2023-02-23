@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useNavigate } from 'react-router-dom'
 import { asyncLocalStorage } from '../../services/asyncLocalStorage'
 import Button from '../Button'

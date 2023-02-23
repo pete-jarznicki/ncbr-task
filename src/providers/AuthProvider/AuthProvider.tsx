@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { asyncLocalStorage } from '../../services/asyncLocalStorage'
+import { IUser } from '../../types'
 
-const AuthContext = createContext({})
+const AuthContext = createContext({} as { isAuth: boolean; userData: IUser | null })
 
 export const useAuth = () => {
   return useContext(AuthContext)
@@ -15,7 +16,7 @@ interface IAuthProviderProps {
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isAuth, setIsAuth] = useState(false)
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState<IUser | null>(null)
   const location = useLocation()
 
   useEffect(() => {
@@ -26,8 +27,8 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
           setIsAuth(false)
           return
         }
-        const usersRecords = await asyncLocalStorage.getItem('userRecords')
-        const userData = usersRecords.find((user: any) => user.email === authUser.email)
+        const usersRecords = (await asyncLocalStorage.getItem('userRecords')) as IUser[]
+        const userData = usersRecords.find((user) => user.email === authUser.email) || null
         setUserData(userData)
         setIsAuth(true)
       } catch (error) {
