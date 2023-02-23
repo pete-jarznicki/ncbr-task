@@ -24,6 +24,7 @@ const App = () => {
         const localStorageUsersState = await asyncLocalStorage.getItem('userRecords')
         if (localStorageUsersState !== null) {
           await asyncLocalStorage.setItem('userRecords', localStorageUsersState)
+          return
         }
         await asyncLocalStorage.setItem('userRecords', initialLocalStorageState)
       } catch (error) {
